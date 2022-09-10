@@ -1,5 +1,8 @@
 <?php
-$filename =  'firepit.php';
+$config = file_get_contents("fire.config.json");//get json options
+$option = json_decode($config);
+$indexfile = $option->{'index.file'};
+$filename =  $indexfile;
   function getBetween($content,$start,$end){
     $r = explode($start, $content);
     if (isset($r[1])){
@@ -8,7 +11,6 @@ $filename =  'firepit.php';
     }
     return '';
   }
-//end
 $path_to_file = $filename;
 $file_contents = file_get_contents($path_to_file);
 $file_contents = str_replace('[?fr', "<?php", $file_contents);
@@ -36,6 +38,10 @@ $file_contents = str_replace('@pass', '$pass', $file_contents);
 file_put_contents($path_to_file, $file_contents);
 $path_to_file = $filename;
 $file_contents = file_get_contents($path_to_file);
+$file_contents = str_replace('#add', 'include', $file_contents);
+file_put_contents($path_to_file, $file_contents);
+$path_to_file = $filename;
+$file_contents = file_get_contents($path_to_file);
 $file_contents = str_replace('@user', '$user', $file_contents);
 file_put_contents($path_to_file, $file_contents);
 $path_to_file = $filename;
@@ -56,15 +62,36 @@ $file_contents = str_replace('[@connect.core@]', '@@conn = new mysqli($host, $us
 file_put_contents($path_to_file, $file_contents);
 $path_to_file = $filename;
 $file_contents = file_get_contents($path_to_file);
+$file_contents = str_replace('[connect.run]', '@@conn', $file_contents);
+file_put_contents($path_to_file, $file_contents);
+$path_to_file = $filename;
+$file_contents = file_get_contents($path_to_file);
 $file_contents = str_replace('@@', '$', $file_contents);
 file_put_contents($path_to_file, $file_contents);
 $errorhandle = '
 if ($conn->connect_error) {
-  die("Error")
+   errormessage($error)
 }
 ';
 $path_to_file = $filename;
 $file_contents = file_get_contents($path_to_file);
 $file_contents = str_replace('handle[connect.error]', "$errorhandle", $file_contents);
 file_put_contents($path_to_file, $file_contents);
-//SQL RUNNER
+function errormessage($error) {
+   die("$error");
+};
+function DBMAKE($dbname){
+$sql = "CREATE DATABASE $dbname";
+if ($conn->query($sql) === TRUE) {
+  echo "";
+} else {
+  errormessage($error) . $conn->error;
+}}
+//javascript
+function pagealert($alertmessage){
+  echo '<script>alert(',"$alertmessage",')</script>';
+}
+function consolelog($consolemessage){
+  echo'<script>console.log(',"$consolemessage",')</script>';
+}
+?> 
