@@ -2,6 +2,8 @@
 $config = file_get_contents("fire.config.json");//get json options
 $option = json_decode($config);
 $indexfile = $option->{'index.file'};
+$runonbuild = $option->{'run.on.build'};
+
 $filename =  $indexfile;
   function getBetween($content,$start,$end){
     $r = explode($start, $content);
@@ -74,7 +76,7 @@ $file_contents = str_replace('@@', '$', $file_contents);
 file_put_contents($path_to_file, $file_contents);
 $errorhandle = '
 if ($conn->connect_error) {
-   errormessage($error);
+   errormessage($error)
 }
 ';
 $path_to_file = $filename;
@@ -98,4 +100,14 @@ function pagealert($alertmessage){
 function consolelog($consolemessage){
   echo'<script>console.log(',"$consolemessage",')</script>';
 }
-?> 
+//javascript
+$path_to_file = $filename;
+$file_contents = file_get_contents($path_to_file);
+$file_contents = str_replace('close', 'exit', $file_contents);
+file_put_contents($path_to_file, $file_contents);
+function addjs($jsfile){
+  echo'<script src="',"$jsfile",'"></script>';
+}
+function addcss($cssfile){
+  echo'<link rel="stylesheet" href="',"$cssfile",'">';
+}
