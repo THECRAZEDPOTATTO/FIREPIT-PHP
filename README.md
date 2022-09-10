@@ -1,5 +1,5 @@
 # FIREPIT-PHP
-FIREPIT php based compiler for FIRE 
+FIREPIT php based compiler for FIRE to help with Databases
 
 Fire is a php compiled lang which simlar to type script compiles your code into vanilla PHP
 
@@ -14,3 +14,5 @@ To start open FIREPITS config-fire.json file and edit the target file next eithe
 To start writing in FIRE make a new compile.fire file in the target location then add the opening tags ```[?fr ``` and close with ```?]``` this will later be replaced with the open and close php tags ```<?php``` and closing with ```?>``` if you do not want to include the fire tags u can use the php tags. 
 
 To compile code run  fire.compiler.php file 
+
+# FIREPIT JS and PY comming soon 
