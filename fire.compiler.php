@@ -74,7 +74,7 @@ $file_contents = str_replace('@@', '$', $file_contents);
 file_put_contents($path_to_file, $file_contents);
 $errorhandle = '
 if ($conn->connect_error) {
-   errormessage($error)
+   errormessage($error);
 }
 ';
 $path_to_file = $filename;
